@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD [ "python", "./lex.py" ]
+# CMD [ "python", "./lex.py" ]
