@@ -215,6 +215,27 @@ def soundStop():
 
 # Lights
 
+def pop_a_wheelie(unused_param):
+    '''
+    Tell Cozmo to pop a wheelie on a cube that is placed in front of him.
+    This example demonstrates Cozmo driving to a cube and pushing himself onto
+    his back by pushing his lift against that cube.
+    '''
+    return f'    print("Cozmo is waiting until he sees a cube")\n    cube = robot.world.wait_for_observed_light_cube()\n    print("Cozmo found a cube, and will now attempt to pop a wheelie on it")\n    action = robot.pop_a_wheelie(cube, num_retries=2)\n    action.wait_for_completed()\n'
+
+
+def sound():
+    return f"    notes = [\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.Half),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.ThreeQuarter),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.Rest, cozmo.song.NoteDurations.Quarter),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.Quarter),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.Whole) ]\n    robot.play_song(notes, loop_count=1).wait_for_completed()\n"
+
+
+def roll_a_cube(unused_param):
+    '''
+    Tell Cozmo to roll a cube that is placed in front of him.
+    This example demonstrates Cozmo driving to and rolling a cube.
+    You must place a cube in front of Cozmo so that he can see it.
+    The cube should be centered in front of him.
+    '''
+    return f'    cube1 = robot.world.get_light_cube(1)\n    robot.roll_cube(cube1).wait_for_completed()\n'
 
 
 
