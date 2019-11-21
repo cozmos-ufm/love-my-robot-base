@@ -206,7 +206,7 @@ def Sheep(unused_param):
 # Sound
 
 def sound():
-    return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
+    return f"    notes = [\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.Half),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.ThreeQuarter),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.Rest, cozmo.song.NoteDurations.Quarter),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.Quarter),\n        cozmo.song.SongNote(cozmo.song.NoteTypes.C3, cozmo.song.NoteDurations.Whole) ]\n    robot.play_song(notes, loop_count=1).wait_for_completed()\n"
 
 def sound80s():
     return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
@@ -225,7 +225,7 @@ def sound(ununsed_param):
     return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
 
 
-async def pop_a_wheelie(cube_to_wheelie):
+def pop_a_wheelie(cube_to_wheelie):
     '''
     Tell Cozmo to pop a wheelie on a cube that is placed in front of him.
     This example demonstrates Cozmo driving to a cube and pushing himself onto
