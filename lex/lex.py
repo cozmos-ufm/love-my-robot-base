@@ -27,20 +27,6 @@ def Count(number):
     int(number)
     return f"    for i in range({number}):\n        robot.say_text(str(i+1)).wait_for_completed()"
 
-def Yes(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabYes).wait_for_completed()"
-
-# Soung
-def sound(unused_param):
-    return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
-
-def sound80s(unused_param):
-    return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
-
-def soundStop(unused_param):
-    return f"    time.sleep(2.0)\n    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoopStop)"
-
-
 def lift(numbertolift):
     float(numbertolift)
     return f"    robot.move_lift({numbertolift})"
@@ -95,33 +81,11 @@ def Sneeze(unused_param):
 def Scared(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabScared).wait_for_completed()"
 
-def PartyMode(unused_param):
-    var_string = "    for i in range(10):\n"
-    var_string = "        robot.set_all_backpack_lights(cozmo.lights.red_light)\n"    
-    var_string = "        time.sleep(0.1)\n"
-    var_string = "        robot.set_all_backpack_lights(cozmo.lights.green_light)\n"
-    var_string = "        time.sleep(0.1)\n"
-    var_string = "        robot.set_all_backpack_lights(cozmo.lights.blue_light)\n"
-    var_string = "        time.sleep(0.1)\n"
-    var_string = "        robot.set_center_backpack_lights(cozmo.lights.white_light)\n"
-    var_string = "        time.sleep(0.1)\n"
-    var_string = "        robot.set_all_backpack_lights(cozmo.lights.off_light)"
-    var_string = "        time.sleep(0.1)"
-    return var_string
+def BackpackBlue(unused_param):   
+    return f"    robot.set_all_backpack_lights(cozmo.lights.blue_light)"
 
-def Lights(param):
-    param = param.lower()
-    return f"    robot.set_all_backpack_lights(cozmo.lights.+'{param}'+_light)\n        time.sleep(1000)"
 
-#EXTRAS ANIMALS
-def duck(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabDuck).wait_for_completed()"
 
-def Elephant(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabElephant).wait_for_completed()"
-
-def Sheep(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabSheep).wait_for_completed()"
 
 
     
@@ -161,8 +125,6 @@ def message_handler(message):
 LMR_to_func_dict = {
      "SAY" : sayhello,
      "COUNT": Count,
-     "YES": Yes,
-     "SOUND": sound,
      "LIFT": lift,
      "MOVE": move,
      "MOVEBACK": moveback,
@@ -171,12 +133,7 @@ LMR_to_func_dict = {
      "HICCUP": Hiccup,
      "SURPRISE": Surprise,
      "EXCITED": Excited,
-     "SNEEZE": Sneeze,
-     "SCARED": Scared,
-     "PARTY": PartyMode,
-     "LIGHT": Lights,
-     "DUCK": duck,
-     "ELEPHANT": Elephant
+     "LIGHTBLUE": BackpackBlue
 }
 
 def function_getter_from_JSON(JSON):
@@ -245,6 +202,26 @@ def asyncSUB():
     print(f"asyncSUB: message: {message}")
 
 
+
+
+#Animals
+def duck(robot: cozmo.robot.Robot):
+    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabDuck).wait_for_completed()    
+
+def Elephant(robot: cozmo.robot.Robot):
+    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabElephant).wait_for_completed()  
+
+# Sound
+
+def sound():
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
+
+def sound80s():
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
+
+def soundStop():
+    return f"    time.sleep(2.0)\n    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoopStop)"
+
 # Lights
 
 def cubeOneLights():
@@ -270,7 +247,7 @@ def driveOffFunction():
 
     return f'robot.drive_off_charger_contacts().wait_for_completed()\nrobot.drive_straight(distance_mm(100), speed_mmps(50)).wait_for_completed()\nrobot.move_lift(-3)\nrobot.turn_in_place(degrees(180)).wait_for_completed()\nrobot.set_head_angle(degrees(0)).wait_for_completed()\ntime.sleep(0.5)\nrobot.drive_straight(distance_mm(-60), speed_mmps(50)).wait_for_completed()\n'
 
-async def pop_a_wheelie():
+async def pop_a_wheelie(cube_to_wheelie):
     '''
     Tell Cozmo to pop a wheelie on a cube that is placed in front of him.
     This example demonstrates Cozmo driving to a cube and pushing himself onto
@@ -295,6 +272,17 @@ def pickupCube():
     '''
     
     return f'lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)\ntarg = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)\nlookaround.stop()\nrobot.pickup_object(targ, num_retries=5).wait_for_completed()\n'
+
+# Drop
+def dropOffCube():
+    '''
+    Make Cozmo drop off a Cube.
+    Is necessary have to pick up a cube first
+    '''
+    return f'    robot.place_object_on_ground_here(num_retries=2).wait_for_completed()'
+
+def mathOperations(funcToOperate):
+    return f'    answer = eval({funcToOperate})\n    robot.say_text('{answer}').wait_for_completed()\n'
 
 if __name__ == "__main__":
     """We start asyncSUB() and Flask.
