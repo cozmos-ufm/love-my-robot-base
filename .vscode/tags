@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Elephant	../lex/lex.py	/^def Elephant(robot: cozmo.robot.Robot):$/;"	kind:function	line:162
+Hiccup	../lex/lex.py	/^def Hiccup(robot: cozmo.robot.Robot):$/;"	kind:function	line:151
+LMR_to_func_dict	../lex/lex.py	/^LMR_to_func_dict = {$/;"	kind:variable	line:53
+Surprise	../lex/lex.py	/^def Surprise(robot: cozmo.robot.Robot):$/;"	kind:function	line:154
+app	../lex/lex.py	/^app = Flask(__name__)$/;"	kind:variable	line:6
+asyncSUB	../lex/lex.py	/^def asyncSUB():$/;"	kind:function	line:109
+celebration	../lex/lex.py	/^def celebration(robot: cozmo.robot.Robot):$/;"	kind:function	line:148
+channel	../lex/lex.py	/^channel = 'do'$/;"	kind:variable	line:10
+cozmo_program	../lex/example.py	/^def cozmo_program(robot: cozmo.robot.Robot):$/;"	kind:function	line:8
+cozmo_program	../test1.py	/^def cozmo_program(robot: cozmo.robot.Robot):$/;"	kind:function	line:4
+duck	../lex/lex.py	/^def duck(robot: cozmo.robot.Robot):$/;"	kind:function	line:159
+example.py	../lex/example.py	1;"	kind:file	line:1
+function_getter_from_JSON	../lex/lex.py	/^def function_getter_from_JSON(JSON):$/;"	kind:function	line:61
+global_json	../lex/lex.py	/^global_json = None$/;"	kind:variable	line:11
+hello_world	../lex/lex.py	/^def hello_world():$/;"	kind:function	line:178
+isNumber	../lex/lex.py	/^def isNumber(maybe_number):$/;"	kind:function	line:15
+lex.py	../lex/lex.py	1;"	kind:file	line:1
+lift	../lex/lex.py	/^def lift(numbertolift):$/;"	kind:function	line:22
+message_handler	../lex/lex.py	/^def message_handler(message):$/;"	kind:function	line:36
+move	../lex/lex.py	/^def move(distance, speed):$/;"	kind:function	line:25
+moveback	../lex/lex.py	/^def moveback(negativedistance, speed):$/;"	kind:function	line:30
+p	../lex/lex.py	/^p = r.pubsub(ignore_subscribe_messages=True)$/;"	kind:variable	line:9
+python_file	../lex/lex.py	/^python_file = "test1.py"$/;"	kind:variable	line:13
+r	../lex/lex.py	/^r = redis.StrictRedis(host="localhost", port=6379, db=0)$/;"	kind:variable	line:7
+robot	../lex/lex.py	/^robot= cozmo.robot.Robot$/;"	kind:variable	line:12
+sayhello	../lex/lex.py	/^def sayhello(string_to_say):$/;"	kind:function	line:19
+test1.py	../test1.py	1;"	kind:file	line:1
+turn	../lex/lex.py	/^def turn(robot: cozmo.robot.Robot):$/;"	kind:function	line:140

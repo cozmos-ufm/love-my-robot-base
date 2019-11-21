@@ -62,8 +62,9 @@ app.use(bodyParser.json());
 
 let names = ['SAY HI', 'SAY HELLO']
 
-app.get('/', (req, res) => res.sendFile('index.html'))
+app.get('/', (req, res) => res.sendFile('index.html', {names}))
 app.get('/pug', (req, res) => res.render('pugIndex', {names}))
+app.get('/c', (req, res) => res.render('cozmo', {names}))
 
 app.get('/send', (req, res) => {
     var js ={
