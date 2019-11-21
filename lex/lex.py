@@ -107,9 +107,9 @@ def PartyMode(unused_param):
     var_string += "        time.sleep(0.1)\n"
     return var_string
 
-def Lights(param):
-    param = param.lower()
-    return f"    robot.set_all_backpack_lights(cozmo.lights.{param}_light)\n    time.sleep(1)"
+def Lights(light_color):
+    light_color = light_color.lower()
+    return f"    robot.set_all_backpack_lights(cozmo.lights.{light_color}_light)\n    time.sleep(1)"
 
 def win(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabWin).wait_for_completed()" 
@@ -204,7 +204,6 @@ def Sheep(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabSheep).wait_for_completed()"
 
 # Sound
-
 def sound():
     return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
 
@@ -258,6 +257,8 @@ def message_handler(message):
     Once invoked through asyncSUB() it handles
     the message by converting it from string
     to JSON and assigns it to 'global_json'
+
+    Note: global_json is probs deprecated   
     """
     print(f"MY HANDLER: '{message.get('data')}")
     json_message = None
@@ -303,7 +304,12 @@ def function_getter_from_JSON(JSON):
     """Receives a JSON and extractrs the LMR
     function and param and passes it as string.
 
-    Do desc later.
+    This function writes necesarry lines for the newly
+    created python fil eto work. Then for each function 
+    that the user entered, it appends it to an array and
+    writes it to the python file. 
+
+    Finally it executes this python file. 
     """
     functions_and_params = []
     functions_and_params = JSON.get('lmr')
