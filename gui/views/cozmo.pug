@@ -14,6 +14,9 @@ style.
   background-position: center;
   background-size: cover;
   }
+  .li1:hover{
+  background-color: #ff9999;
+  }
 .bgimg.w3-display-container.w3-animate-opacity.w3-text-white
   .w3-display-topleft.w3-padding-large.w3-xlarge
     | COZMO
@@ -33,22 +36,73 @@ style.
             h6#YES.nopar YES
           a.dropdown-item(href='#')
             h6#SOUND.nopar SOUND
-          a.dropdown-item(href='#')
-            h6#DRIVEOFF.nopar DRIVEOFF
       .dropdown
         button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
           | Drive
         .dropdown-menu(aria-labelledby='dropdownMenuButton')
-          a.dropdown-item(href='#') Action
-          a.dropdown-item(href='#') Another action
-          a.dropdown-item(href='#') Something else here
+          a.dropdown-item(href='#')
+            h6#DRIVEOFF.nopar DRIVEOFF
+          a.dropdown-item(href='#')
+            h6#MOVE.par MOVE
+          a.dropdown-item(href='#')
+            h6#TURN.par TURN
+          a.dropdown-item(href='#')
+            h6#DRIVEOFF.par LIFT
       .dropdown
         button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-          | Dropdown button
+          | Animations
         .dropdown-menu(aria-labelledby='dropdownMenuButton')
-          a.dropdown-item(href='#') Action
-          a.dropdown-item(href='#') Another action
-          a.dropdown-item(href='#') Something else here
+          a.dropdown-item(href='#')
+           h6#PARTY.nopar PARTY
+          a.dropdown-item(href='#')
+           h6#LIGHT.par LIGHT
+          a.dropdown-item(href='#')
+            h6#WIN.nopar WIN
+          a.dropdown-item(href='#')
+            h6#HICCUP.nopar HICCUP
+          a.dropdown-item(href='#')
+            h6#SURPRISE.nopar SURPRISE
+          a.dropdown-item(href='#')
+            h6#EXCITED.nopar EXCITED
+          a.dropdown-item(href='#')
+            h6#SNEEZE.nopar SNEEZE
+          a.dropdown-item(href='#')
+            h6#SCARED.nopar SCARED
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            | CubesAnimations
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+            a.dropdown-item(href='#')
+            h6#CUBERED.nopar CUBERED
+            a.dropdown-item(href='#')
+            h6#CUBEBLUE.par CUBEBLUE
+            a.dropdown-item(href='#')
+            h6#CUBEGREEN.nopar CUBEGREEN
+            a.dropdown-item(href='#')
+            h6#PICKUP.nopar PICKUP
+            a.dropdown-item(href='#')
+            h6#DROP.nopar DROP
+            a.dropdown-item(href='#')
+            h6#ROLLCUBE.nopar ROLLCUBE
+            a.dropdown-item(href='#')
+            h6#WHEELIE.nopar WHEELIE
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            | Animals
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+            a.dropdown-item(href='#')
+            h6#DUCK.nopar DUCK
+            a.dropdown-item(href='#')
+            h6#ELEPHANT.par ELEPHANT
+            a.dropdown-item(href='#')
+            h6#SHEEP.nopar SHEEP
+      div
+        a.btn.btn-secondary(href='/' style='background-color: #a64dff !important;' aria-haspopup='true' aria-expanded='false')
+            | Home
+      div
+        a.btn.btn-secondary(href='localhost:5000/' style='background-color: #669999 !important;' aria-haspopup='true' aria-expanded='false')
+            | Code
+
     .jumbotron(style='color: black;')
       h3.display-6
         | Your current command
@@ -57,11 +111,12 @@ style.
         div(style='display: flex;')
           .input-group.input-group-lg
             .input-group-prepend
-              span#inputGroup-sizing-lg.input-group-text MOVE
+              span#inputGroup-sizing-lg.input-group-text SAY
             input#inputcode.form-control(type='text' aria-label='Large' aria-describedby='inputGroup-sizing-sm')
           a#save.btn.btn-success.btn-lg(href='#' role='button') Save
         hr.my-4
         p Commands going to Cozmo:
+        h6 (click on the command you'd like to remove)
         ul.list-group
             each line, index in code
                 li(id=index).li1.list-group-item #{line} 
