@@ -1,5 +1,5 @@
 import redis, json, threading, time, asyncio, os, cozmo, sys
-from flask import Flask
+from flask import Flask, render_template
 from cozmo.lights import blue_light, Color, green_light, Light, red_light, white_light, off_light
 from cozmo.util import degrees, distance_mm, radians, speed_mmps
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
@@ -11,7 +11,7 @@ p = r.pubsub(ignore_subscribe_messages=True)
 channel = 'do'
 global_json = None
 robot= cozmo.robot.Robot
-python_file = "test1.py"
+
 
 functions_executed = []
 
@@ -30,11 +30,40 @@ def Count(number):
 def lift(numbertolift):
     float(numbertolift)
     return f"    robot.move_lift({numbertolift})"
+  
+def Yes(unused_param):
+    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabYes).wait_for_completed()"
+
+# Soung
+def sound(unused_param):
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
+
+def sound80s(unused_param):
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
+
+def soundStop(unused_param):
+    return f"    time.sleep(2.0)\n    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoopStop)"
+
+#Drive
+def driveOffFunction(unused_param):
+    '''
+    drive off the charger
+    Start moving the lift down
+    turn around to look at the charger
+    Tilt the head to be level
+    wait half a second to ensure Cozmo has seen the charger
+    drive backwards away from the charger
+    '''
+
+    return f'    robot.drive_off_charger_contacts().wait_for_completed()\n    robot.drive_straight(distance_mm(100), speed_mmps(50)).wait_for_completed()\n    robot.move_lift(-3)\n    robot.turn_in_place(degrees(180)).wait_for_completed()\n    robot.set_head_angle(degrees(0)).wait_for_completed()\n    time.sleep(0.5)\n    robot.drive_straight(distance_mm(-60), speed_mmps(50)).wait_for_completed()\n'
+
+
 
 def move(distance_speed):
     # Drive forwards for 150 millimeters at 50 millimeters-per-second.
     #robot.drive_straight(distance_mm(150), speed_mmps(50)).wait_for_completed()
     params_list = distance_speed.split(" ")
+    print(f"params quantity:{len(params_list)}")
     if len(params_list) == 2:
         param1 = float(params_list[0])
         param2 = float(params_list[1])
@@ -62,7 +91,26 @@ def turn(degrees):
 
 
 
+
 #Animations
+def PartyMode(unused_param):
+    var_string = "    for i in range(10):\n"
+    var_string += "        robot.set_all_backpack_lights(cozmo.lights.red_light)\n"    
+    var_string += "        time.sleep(0.1)\n"
+    var_string += "        robot.set_all_backpack_lights(cozmo.lights.green_light)\n"
+    var_string += "        time.sleep(0.1)\n"
+    var_string += "        robot.set_all_backpack_lights(cozmo.lights.blue_light)\n"
+    var_string += "        time.sleep(0.1)\n"
+    var_string += "        robot.set_center_backpack_lights(cozmo.lights.white_light)\n"
+    var_string += "        time.sleep(0.1)\n"
+    var_string += "        robot.set_all_backpack_lights(cozmo.lights.off_light)\n"
+    var_string += "        time.sleep(0.1)\n"
+    return var_string
+
+def Lights(param):
+    param = param.lower()
+    return f"    robot.set_all_backpack_lights(cozmo.lights.{param}_light)\n    time.sleep(1)"
+
 def win(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabWin).wait_for_completed()" 
 
@@ -79,10 +127,71 @@ def Sneeze(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabSneeze).wait_for_completed()"
 
 def Scared(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabScared).wait_for_completed()"
+    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabScaredCozmo).wait_for_completed()"
 
-def BackpackBlue(unused_param):   
-    return f"    robot.set_all_backpack_lights(cozmo.lights.blue_light)"
+
+#Cubes Animations
+
+def cubeOneLights(unused_param):
+    return_value = """
+    cube1 = robot.world.get_light_cube(LightCube1Id)
+    if cube1 is not None:
+        cube1.set_lights(cozmo.lights.red_light)
+    else:
+        cozmo.logger.warning("Cozmo is not connected to a LightCube1Id cube - check the battery.")
+        time.sleep(10)\n
+    """
+    return return_value
+
+def cubeTwoLights(unused_param):
+    return_value = """
+    cube2 = robot.world.get_light_cube(LightCube2Id)
+    if cube2 is not None:
+        cube2.set_lights(cozmo.lights.green_light)
+    else:
+        cozmo.logger.warning("Cozmo is not connected to a LightCube2Id cube - check the battery.")
+        time.sleep(10)\n
+    """
+    return return_value
+
+def cubeThreeLights(unused_param):
+    return_value = """
+    cube3 = robot.world.get_light_cube(LightCube3Id)
+    if cube3 is not None:
+        cube3.set_lights(cozmo.lights.blue_light)
+    else:
+        cozmo.logger.warning("Cozmo is not connected to a LightCube3Id cube - check the battery.")
+        time.sleep(10)\n
+    """
+    return return_value
+
+def pickupCube(unused_param):
+    '''
+    Make Cozmo pick up a Cube.
+    The robot attempts to find a Cube within his view, and then attempts to
+    pick up the finded. 
+    '''
+    
+    return f'    lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)\n    targ = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)\n    lookaround.stop()\n    robot.pickup_object(targ[0], num_retries=5).wait_for_completed()\n'
+
+def roll_a_cube(unused_param):
+    '''
+    Tell Cozmo to roll a cube that is placed in front of him.
+    This example demonstrates Cozmo driving to and rolling a cube.
+    You must place a cube in front of Cozmo so that he can see it.
+    The cube should be centered in front of him.
+    '''
+    return f'    robot.set_head_angle(degrees(-5.0)).wait_for_completed()\n    print("Cozmo is waiting until he sees a cube")\n    cube = robot.world.wait_for_observed_light_cube()\n    print("Cozmo found a cube, and will now attempt to roll with it:")\n    action = robot.roll_cube(cube, check_for_object_on_top=True, num_retries=2)\n    action.wait_for_completed()\n    print("result:", action.result)\n'
+
+def pop_a_wheelie(unused_param):
+    '''
+    Tell Cozmo to pop a wheelie on a cube that is placed in front of him.
+    This example demonstrates Cozmo driving to a cube and pushing himself onto
+    his back by pushing his lift against that cube.
+    '''
+    return f'    print("Cozmo is waiting until he sees a cube")\n    cube = robot.world.wait_for_observed_light_cube()\n    print("Cozmo found a cube, and will now attempt to pop a wheelie on it")\n    action = robot.pop_a_wheelie(cube, num_retries=2)\n    action.wait_for_completed()\n'
+
+
 
 
 
@@ -126,14 +235,29 @@ LMR_to_func_dict = {
      "SAY" : sayhello,
      "COUNT": Count,
      "LIFT": lift,
+     "YES": Yes,
+     "SOUND": sound,
+     "DRIVEOFF": driveOffFunction,
      "MOVE": move,
-     "MOVEBACK": moveback,
      "TURN": turn,
+     "PARTY": PartyMode,
+     "LIGHT": Lights,  
      "WIN": win,
      "HICCUP": Hiccup,
      "SURPRISE": Surprise,
      "EXCITED": Excited,
-     "LIGHTBLUE": BackpackBlue
+     "SNEEZE": Sneeze,
+     "SCARED": Scared,
+     "CUBERED": cubeOneLights,
+     "CUBEBLUE": cubeTwoLights,
+     "CUBEGREEN": cubeThreeLights,
+     "PICKUP": pickupCube,
+     "ROLLCUBE": roll_a_cube,
+     "WHEELIE": pop_a_wheelie,
+     "DUCK": duck,
+     "ELEPHANT": Elephant,
+     "SHEEP": Sheep
+
 }
 
 def function_getter_from_JSON(JSON):
@@ -144,8 +268,12 @@ def function_getter_from_JSON(JSON):
     """
     functions_and_params = []
     functions_and_params = JSON.get('lmr')
-    f = open(python_file, "w")
-    f.write("import cozmo\n")
+    request_timestamp = JSON.get('request_timestamp')
+
+    python_file = f"lmr_lex{request_timestamp}.py"
+    f = open(f"transpiled/{python_file}", "w")
+    f.write("import cozmo, time\n")
+    f.write("from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id\n")
     f.write("from cozmo.lights import blue_light, Color, green_light, Light, red_light, white_light, off_light\n")
     f.write("from cozmo.util import degrees, distance_mm, radians, speed_mmps\n")
     f.write("def cozmo_program(robot: cozmo.robot.Robot):\n")
@@ -168,12 +296,9 @@ def function_getter_from_JSON(JSON):
             functions_executed.append(error_func_not_found)
             f.write(f"{error_func_not_found}\n")
             
-
-        
-
-        f.write("cozmo.run_program(cozmo_program)\n")
-        f.close()
-        os.system(f"python3 {python_file}")
+    f.write("cozmo.run_program(cozmo_program)\n")
+    f.close()
+    os.system(f"python3 transpiled/{python_file}")
 
 
 def asyncSUB():
@@ -202,8 +327,6 @@ def asyncSUB():
     print(f"asyncSUB: message: {message}")
 
 
-
-
 #Animals
 def duck(robot: cozmo.robot.Robot):
     robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabDuck).wait_for_completed()    
@@ -224,28 +347,20 @@ def soundStop():
 
 # Lights
 
-def cubeOneLights():
-    return f'cube1 = robot.world.get_light_cube(LightCube1Id)\nif cube1 is not None:\n    cube1.set_lights(cozmo.lights.red_light)\nelse:\n    cozmo.logger.warning("Cozmo is not connected to a LightCube1Id cube - check the battery.")\ntime.sleep(10)\n'
 
-def cubeTwoLights():
-    return f'cube2 = robot.world.get_light_cube(LightCube2Id)\nif cube2 is not None:\n    cube2.set_lights(cozmo.lights.green_light)\nelse:\n    cozmo.logger.warning("Cozmo is not connected to a LightCube2Id cube - check the battery.")\ntime.sleep(10)\n'
+#Animals
+def duck(robot: cozmo.robot.Robot):
+    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabDuck).wait_for_completed()    
 
-def cubeThreeLights():
-    return f'cube3 = robot.world.get_light_cube(LightCube3Id)\nif cube3 is not None:\n    cube3.set_lights(cozmo.lights.blue_light)\nelse:\n    cozmo.logger.warning("Cozmo is not connected to a LightCube3Id cube - check the battery.")\ntime.sleep(10)\n'
+def Elephant(robot: cozmo.robot.Robot):
+    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabElephant).wait_for_completed()  
 
-# Drive Off
 
-def driveOffFunction():
-    '''
-    drive off the charger
-    Start moving the lift down
-    turn around to look at the charger
-    Tilt the head to be level
-    wait half a second to ensure Cozmo has seen the charger
-    drive backwards away from the charger
-    '''
+# Soung
 
-    return f'robot.drive_off_charger_contacts().wait_for_completed()\nrobot.drive_straight(distance_mm(100), speed_mmps(50)).wait_for_completed()\nrobot.move_lift(-3)\nrobot.turn_in_place(degrees(180)).wait_for_completed()\nrobot.set_head_angle(degrees(0)).wait_for_completed()\ntime.sleep(0.5)\nrobot.drive_straight(distance_mm(-60), speed_mmps(50)).wait_for_completed()\n'
+def sound(ununsed_param):
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
+
 
 async def pop_a_wheelie(cube_to_wheelie):
     '''
@@ -255,23 +370,11 @@ async def pop_a_wheelie(cube_to_wheelie):
     '''
     return f'print("Cozmo is waiting until he sees a cube")\ncube = await robot.world.wait_for_observed_light_cube()\nprint("Cozmo found a cube, and will now attempt to pop a wheelie on it")\naction = robot.pop_a_wheelie(cube, num_retries=2)\nawait action.wait_for_completed()\n'
 
-async def roll_a_cube():
-    '''
-    Tell Cozmo to roll a cube that is placed in front of him.
-    This example demonstrates Cozmo driving to and rolling a cube.
-    You must place a cube in front of Cozmo so that he can see it.
-    The cube should be centered in front of him.
-    '''
-    return f'await robot.set_head_angle(degrees(-5.0)).wait_for_completed()\nprint("Cozmo is waiting until he sees a cube")\ncube = await robot.world.wait_for_observed_light_cube()\nprint("Cozmo found a cube, and will now attempt to roll with it:")\naction = robot.roll_cube(cube, check_for_object_on_top=True, num_retries=2)\nawait action.wait_for_completed()\nprint("result:", action.result)\n'
+def sound80s(ununsed_param):
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
 
-def pickupCube():
-    '''
-    Make Cozmo pick up a Cube.
-    The robot attempts to find a Cube within his view, and then attempts to
-    pick up the finded. 
-    '''
-    
-    return f'lookaround = robot.start_behavior(cozmo.behavior.BehaviorTypes.LookAroundInPlace)\ntarg = robot.world.wait_until_observe_num_objects(num=1, object_type=cozmo.objects.LightCube, timeout=60)\nlookaround.stop()\nrobot.pickup_object(targ, num_retries=5).wait_for_completed()\n'
+def soundStop():
+    return f"    time.sleep(2.0)\n    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoopStop)"
 
 # Drop
 def dropOffCube():
@@ -282,7 +385,16 @@ def dropOffCube():
     return f'    robot.place_object_on_ground_here(num_retries=2).wait_for_completed()'
 
 def mathOperations(funcToOperate):
-    return f'    answer = eval({funcToOperate})\n    robot.say_text('{answer}').wait_for_completed()\n'
+    return f"    answer = eval({funcToOperate})\n    robot.say_text('{answer}').wait_for_completed()\n"
+
+
+@app.route("/")
+def home():
+    return render_template("index.html", functions_executed=functions_executed)
+
+
+
+
 
 if __name__ == "__main__":
     """We start asyncSUB() and Flask.
@@ -292,11 +404,4 @@ if __name__ == "__main__":
     this is were the fun begins.
     """
     asyncSUB()
-    app.run(host="0.0.0.0")
-    
-    
-@app.route('/')
-def hello_world():
-    cozmo.run_program(Elephant)
-
-
+    app.run(host="0.0.0.0",debug=True)

@@ -1,0 +1,125 @@
+/* For mobile phones: */
+[class*="colx-"] {
+    width: 100%;
+  }
+
+  @media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .colx-3 {width: 50%;}
+  }
+  
+
+  @media only screen and (min-width: 850px) {
+    /* For tablets: */
+    .colx-3 {width: 33%;}
+  }
+
+  @media only screen and (min-width: 1110px) {
+    /* For desktop: */
+    .colx-1 {width: 8.33%;}
+    .colx-2 {width: 16.66%;}
+    .colx-3 {width: 25%;}
+    .colx-4 {width: 33.33%;}
+    .colx-5 {width: 41.66%;}
+    .colx-6 {width: 50%;}
+    .colx-7 {width: 58.33%;}
+    .colx-8 {width: 66.66%;}
+    .colx-9 {width: 75%;}
+    .colx-10 {width: 83.33%;}
+    .colx-11 {width: 91.66%;}
+    .colx-12 {width: 100%;}
+  }
+
+.body1 {   
+    /*position: absolute;*/
+    left: 0px;
+    top: 0px;
+    position: relative;
+    padding: 1%;
+    /* Gradients/Blue */
+    background: linear-gradient(162.83deg, #2561F4 6.03%, #48D3F2 97.94%, #628CF9 97.94%);
+}
+
+.green-btn {
+/* bg */
+
+/* Colors/Success */
+
+background: #1D9C4A;
+border-radius: 8px;
+}
+
+.reg-btn {
+    
+    /* Default Background */
+    
+    background: #FFFFFF;
+    /* Colors/LightBlue */
+    
+    border: 1px solid #EAF3FE;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.card1 {
+    width: 244px;
+    height: 190px;
+    left: 276px;
+    top: 87px;
+
+    margin: 5px;
+    /* Default Background */
+
+    background: #FFFFFF;
+    /* Cards Shadows */
+
+    box-shadow: 0px 4px 8px rgba(38, 72, 116, 0.1);
+    border-radius: 16px;
+}
+
+.h1-white {  
+    color: white; 
+    padding-bottom: 1%;
+    padding-top: 1%;
+ }
+
+ .h1-blk {  
+    color: black; 
+    padding-bottom: 1%;
+    padding-top: 1%;
+ }
+
+ * {
+    box-sizing: border-box;
+  }
+  
+  .rowx::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+  
+  [class*="colx-"] {
+    float: left;
+  }
+
+  pre code {
+    background-color: #eee;
+    border: 1px solid #999;
+    display: block;
+    padding: 20px;
+  } 
+
+  .codebox {
+    /* Below are styles for the codebox (not the code itself) */
+    border:1px solid black;
+    background-color:#EEEEFF;
+    width:300px;
+    overflow:auto;    
+    padding:10px;
+}
+.codebox code {
+    /* Styles in here affect the text of the codebox */
+    font-size:0.9em;
+    /* You could also put all sorts of styling here, like different font, color, underline, etc. for the code. */
+}
