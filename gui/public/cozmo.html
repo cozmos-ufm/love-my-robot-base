@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <style>
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
@@ -24,11 +25,74 @@ body, html {height: 100%}
   <div class="w3-display-middle">
     <h1 class="w3-jumbo w3-animate-top">Play with Cozmo</h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
+    <div style="display: flex;">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#"><h6 class="par" id="SAY">SAY</h6></a>
+          <a class="dropdown-item" href="#"><h6 class="par" id="MATH">MATH</h6></a>
+          <a class="dropdown-item" href="#"><h6 class="nopar" id="YES">YES</h6></a>
+          <a class="dropdown-item" href="#"><h6 class="nopar" id="SOUND">SOUND</h6></a>
+          <a class="dropdown-item" href="#"><h6 class="nopar" id="DRIVEOFF">DRIVEOFF</h6></a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Drive
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron" style="color: black;">
+        <h3 class="display-6">Your current command</h1>
+        <p class="lead">Here you will find the current set up you will be passing to de queue to execute, select a command from the dropdown option and type the params:</p>
+        <div style="display: flex;">
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-lg">MOVE</span>
+                </div>
+                <input id="inputcode" type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <a class="btn btn-success btn-lg" href="#" id="save" role="button">Save</a>
+        </div>
+        <hr class="my-4">
+        <p>Commands going to Cozmo:</p>
+        <ul class="list-group">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Clear</a>
+          <a class="btn btn-success btn-lg" href="#" role="button">Execute</a>
+        </p>
+      </div>
   </div>
   <div class="w3-display-bottomleft w3-padding-large">
-    Powered by <a href="#" target="">w3.css</a>
+    Powered by <a href="#" target="">UFM</a>
   </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/home/andres/Documents/love-my-robot-base/gui/public/js/cozmo.js"></script>
 </body>
 </html>
