@@ -27,6 +27,10 @@ def Count(number):
     int(number)
     return f"    for i in range({number}):\n        robot.say_text(str(i+1)).wait_for_completed()"
 
+def lift(numbertolift):
+    float(numbertolift)
+    return f"    robot.move_lift({numbertolift})"
+  
 def Yes(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabYes).wait_for_completed()"
 
@@ -52,6 +56,7 @@ def driveOffFunction(unused_param):
     '''
 
     return f'    robot.drive_off_charger_contacts().wait_for_completed()\n    robot.drive_straight(distance_mm(100), speed_mmps(50)).wait_for_completed()\n    robot.move_lift(-3)\n    robot.turn_in_place(degrees(180)).wait_for_completed()\n    robot.set_head_angle(degrees(0)).wait_for_completed()\n    time.sleep(0.5)\n    robot.drive_straight(distance_mm(-60), speed_mmps(50)).wait_for_completed()\n'
+
 
 
 def move(distance_speed):
@@ -84,9 +89,6 @@ def turn(degrees):
     # Note: To turn to the right, just use a negative number.
     return f"    robot.turn_in_place(degrees({degrees})).wait_for_completed()"
 
-def lift(numbertolift):
-    int(numbertolift)
-    return f"    robot.move_lift({numbertolift})"
 
 
 
@@ -126,6 +128,7 @@ def Sneeze(unused_param):
 
 def Scared(unused_param):
     return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabScaredCozmo).wait_for_completed()"
+
 
 #Cubes Animations
 
@@ -189,15 +192,9 @@ def pop_a_wheelie(unused_param):
     return f'    print("Cozmo is waiting until he sees a cube")\n    cube = robot.world.wait_for_observed_light_cube()\n    print("Cozmo found a cube, and will now attempt to pop a wheelie on it")\n    action = robot.pop_a_wheelie(cube, num_retries=2)\n    action.wait_for_completed()\n'
 
 
-#EXTRAS ANIMALS
-def duck(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabDuck).wait_for_completed()"
 
-def Elephant(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabElephant).wait_for_completed()"
 
-def Sheep(unused_param):
-    return f"    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabSheep).wait_for_completed()"
+
 
 
     
@@ -237,12 +234,12 @@ def message_handler(message):
 LMR_to_func_dict = {
      "SAY" : sayhello,
      "COUNT": Count,
+     "LIFT": lift,
      "YES": Yes,
      "SOUND": sound,
      "DRIVEOFF": driveOffFunction,
      "MOVE": move,
      "TURN": turn,
-     "LIFT": lift,
      "PARTY": PartyMode,
      "LIGHT": Lights,  
      "WIN": win,
@@ -260,6 +257,7 @@ LMR_to_func_dict = {
      "DUCK": duck,
      "ELEPHANT": Elephant,
      "SHEEP": Sheep
+
 }
 
 def function_getter_from_JSON(JSON):
@@ -329,6 +327,25 @@ def asyncSUB():
     print(f"asyncSUB: message: {message}")
 
 
+#Animals
+def duck(robot: cozmo.robot.Robot):
+    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabDuck).wait_for_completed()    
+
+def Elephant(robot: cozmo.robot.Robot):
+    robot.play_anim_trigger(cozmo.anim.Triggers.CodeLabElephant).wait_for_completed()  
+
+# Sound
+
+def sound():
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
+
+def sound80s():
+    return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
+
+def soundStop():
+    return f"    time.sleep(2.0)\n    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoopStop)"
+
+# Lights
 
 
 #Animals
@@ -344,17 +361,38 @@ def Elephant(robot: cozmo.robot.Robot):
 def sound(ununsed_param):
     return f"    robot.play_audio(cozmo.audio.AudioEvents.SfxGameWin)\n    time.sleep(1.0)"
 
+
+async def pop_a_wheelie(cube_to_wheelie):
+    '''
+    Tell Cozmo to pop a wheelie on a cube that is placed in front of him.
+    This example demonstrates Cozmo driving to a cube and pushing himself onto
+    his back by pushing his lift against that cube.
+    '''
+    return f'print("Cozmo is waiting until he sees a cube")\ncube = await robot.world.wait_for_observed_light_cube()\nprint("Cozmo found a cube, and will now attempt to pop a wheelie on it")\naction = robot.pop_a_wheelie(cube, num_retries=2)\nawait action.wait_for_completed()\n'
+
 def sound80s(ununsed_param):
     return f"    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoop)"
 
 def soundStop():
     return f"    time.sleep(2.0)\n    robot.play_audio(cozmo.audio.AudioEvents.MusicStyle80S1159BpmLoopStop)"
 
+# Drop
+def dropOffCube():
+    '''
+    Make Cozmo drop off a Cube.
+    Is necessary have to pick up a cube first
+    '''
+    return f'    robot.place_object_on_ground_here(num_retries=2).wait_for_completed()'
+
+def mathOperations(funcToOperate):
+    return f"    answer = eval({funcToOperate})\n    robot.say_text('{answer}').wait_for_completed()\n"
 
 
 @app.route("/")
 def home():
     return render_template("index.html", functions_executed=functions_executed)
+
+
 
 
 
