@@ -60,17 +60,50 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-let names = ['SAY HI', 'SAY HELLO']
+let code = ['SAY HI', 'SAY HELLO']
 
-app.get('/', (req, res) => res.sendFile('index.html'))
-app.get('/pug', (req, res) => res.render('pugIndex', {names}))
+app.get('/', (req, res) => res.sendFile('index.html', {code}))
+app.get('/pug', (req, res) => res.render('pugIndex', {code}))
+app.get('/cozmo', (req, res) => res.render('cozmo', {code}))
 
 app.get('/send', (req, res) => {
+    var dateobj = new Date(Date.now()); 
+  
+    // Contents of above date object is converted 
+    // into a string using toISOString() function. 
+    var date = dateobj.toISOString(); 
+    console.log(date)
     var js ={
-        "request_timestamp":"2019-08-11T12:99",
-        "lmr":names
+        "request_timestamp":date,
+        "lmr":code
     } 
     JSONpub(js)
+})
+
+app.get('/clear', (req, res) => {
+    code = []
+    res.json({message:"Cleared"})
+})
+
+app.post('/save-code', function(req, res) {
+    console.log(req.body);
+    code.push(req.body.name);
+    res.json({message:"New code added"})
+})
+app.post('/delete-code', function(req, res) {
+    console.log(req.body);
+    let found = 0
+    for( var i = 0; i < code.length; i++){ 
+        if ( i == req.body.id) {
+          code.splice(i, 1)
+          found = 1
+        }
+     }
+    // names.delete(req.body.name);
+    if(found == 1){
+        res.json({message:"Code deleted"})
+    }
+    res.json({message:"Code not found"})
 })
 
 app.post('/save-user', function(req, res) {
