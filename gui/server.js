@@ -38,21 +38,21 @@ function JSONpub(json) {
     console.log("JSON sent!")
 }
 
-function stateChange(newState) {
-    /**
-     * Waits 5 seconds before sending JSON
-     * 
-     * This function is only temporary, it 
-     */
-    setTimeout(function () {
-        if (newState == -1) {
-            console.log("Printing stuff")
-            JSONpub(_code);
-        }
-    }, 5000);
-}
+// function stateChange(newState) {
+//     /**
+//      * Waits 5 seconds before sending JSON
+//      * 
+//      * This function is only temporary, it 
+//      */
+//     setTimeout(function () {
+//         if (newState == -1) {
+//             console.log("Printing stuff")
+//             JSONpub(_code);
+//         }
+//     }, 5000);
+// }
 
-stateChange(-1)
+// stateChange(-1)
 
 app.set('view engine', 'pug')
 app.use(express.static('public'))
