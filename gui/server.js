@@ -52,7 +52,6 @@ app.get('/cozmo', (req, res) => res.render('cozmo', {code}))
 
 app.get('/send', (req, res) => {
     var dateobj = new Date(Date.now()); 
-    code = []
     // Contents of above date object is converted 
     // into a string using toISOString() function. 
     var date = dateobj.toISOString(); 
@@ -63,6 +62,7 @@ app.get('/send', (req, res) => {
     } 
     console.log(js)
     JSONpub(js)
+    code = []
     res.json({message:"Executed"})
 })
 
