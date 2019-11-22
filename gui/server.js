@@ -38,22 +38,6 @@ function JSONpub(json) {
     console.log("JSON sent!")
 }
 
-// function stateChange(newState) {
-//     /**
-//      * Waits 5 seconds before sending JSON
-//      * 
-//      * This function is only temporary, it 
-//      */
-//     setTimeout(function () {
-//         if (newState == -1) {
-//             console.log("Printing stuff")
-//             JSONpub(_code);
-//         }
-//     }, 5000);
-// }
-
-// stateChange(-1)
-
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 
@@ -68,7 +52,6 @@ app.get('/cozmo', (req, res) => res.render('cozmo', {code}))
 
 app.get('/send', (req, res) => {
     var dateobj = new Date(Date.now()); 
-  
     // Contents of above date object is converted 
     // into a string using toISOString() function. 
     var date = dateobj.toISOString(); 
@@ -77,7 +60,10 @@ app.get('/send', (req, res) => {
         "request_timestamp":date,
         "lmr":code
     } 
+    console.log(js)
     JSONpub(js)
+    code = []
+    res.json({message:"Executed"})
 })
 
 app.get('/clear', (req, res) => {
@@ -102,8 +88,9 @@ app.post('/delete-code', function(req, res) {
     // names.delete(req.body.name);
     if(found == 1){
         res.json({message:"Code deleted"})
+    }else{
+        res.json({message:"Code not found"})
     }
-    res.json({message:"Code not found"})
 })
 
 app.post('/save-user', function(req, res) {
