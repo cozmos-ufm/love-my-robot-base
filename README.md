@@ -1,5 +1,5 @@
 <a href="https://github.com/cozmos-ufm/love-my-robot-base">
-    <img src="https://image.flaticon.com/icons/svg/647/647860.svg" alt="Robot" title="Robot" align="center" height="60" />
+    <img src="https://image.flaticon.com/icons/svg/647/647860.svg" alt="Robot" title="Robot"  height="200"  align="center" />
 </a>
 
 :star: Star us on GitHub — it helps!
