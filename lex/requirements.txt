@@ -1,3 +1,4 @@
 flask
 # optional
 redis
+cozmo

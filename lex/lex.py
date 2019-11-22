@@ -268,7 +268,7 @@ def dropOffCube(unused_param):
     return f'    if targ[0]:\n        robot.place_object_on_ground_here(targ[0]).wait_for_completed()'
 
 def mathOperations(funcToOperate):
-    return f"    answer = eval({funcToOperate})\n    robot.say_text(answer).wait_for_completed()\n"
+    return f"    answer = eval('str({funcToOperate})')\n    robot.say_text(str(answer)).wait_for_completed()\n"
 
           
 

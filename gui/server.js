@@ -63,7 +63,7 @@ app.get('/send', (req, res) => {
     console.log(js)
     JSONpub(js)
     code = []
-    res.json({message:"Executed"})
+    res.json({message:"Code sent!"})
 })
 
 app.get('/clear', (req, res) => {
