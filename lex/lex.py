@@ -14,6 +14,7 @@ robot= cozmo.robot.Robot
 
 
 functions_executed = []
+time=""
 
 def isNumber(maybe_number):
     return isinstance(maybe_number, int) or isinstance(maybe_number, float)
@@ -335,7 +336,7 @@ def function_getter_from_JSON(JSON):
     functions_and_params = []
     functions_and_params = JSON.get('lmr')
     request_timestamp = JSON.get('request_timestamp')
-
+    time = request_timestamp
     python_file = f"lmr_lex{request_timestamp}.py"
     f = open(f"transpiled/{python_file}", "w")
     f.write("import cozmo, time\n")
@@ -396,7 +397,7 @@ def asyncSUB():
 
 @app.route("/")
 def home():
-    return render_template("index.html", functions_executed=functions_executed)
+    return render_template("index.html", functions_executed=functions_executed, t=time)
 
 
 
