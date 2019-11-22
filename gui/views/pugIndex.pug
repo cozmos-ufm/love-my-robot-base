@@ -1,0 +1,21 @@
+head
+    link(rel="stylesheet", href="styles/css/example.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src="js/example.js")
+    script.
+        var nombres = !{JSON.stringify(names)}
+body
+    .main-div
+        h1 Pug File
+        .input-container
+            span Nombre 
+            input#nombre(type="text")
+        .send-button-container
+            button.send Enviar
+        .names-container
+            h2 presione en el nombre para borrarlo de la lista
+            ul 
+                each name in code
+                    li(onclick="el()").li1#target #{name}
+        button.run Run
+               

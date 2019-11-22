@@ -7,21 +7,18 @@ services:
             context: gui/
         ports:
         - 8080:8080
-    lex:
-        image: yourimagename/lex
-        build:
-            context: lex
-        ports:
-        - 5000:5000
+        depends_on: 
+        - redis
+    # lex:
+    #     image: yourimagename/lex
+    #     build:
+    #         context: lex
+    #     ports:
+    #     - 5000:5000
 
 # from your apps you can reach Redis IP with its fqdn "redis"
     redis:
-        image: redis:alpine
-        restart: always
-        volumes:
-            - redis_data:/data
+        image: redis
         ports:
-            - 6379:6379
-
-volumes:
-    redis_data: {}
+        - 6379:6379
+        

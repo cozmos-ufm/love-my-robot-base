@@ -1,0 +1,132 @@
+doctype html
+title Cozmo
+meta(charset='UTF-8')
+meta(name='viewport' content='width=device-width, initial-scale=1')
+link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous')
+style.
+  body,h1 {font-family: "Raleway", sans-serif}
+  body, html {height: 100%}
+  .bgimg {
+  background-image: url('/images/back.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+  }
+  .li1:hover{
+  background-color: #ff9999;
+  }
+.bgimg.w3-display-container.w3-animate-opacity.w3-text-white
+  .w3-display-topleft.w3-padding-large.w3-xlarge
+    | COZMO
+  .w3-display-middle
+    h1.w3-jumbo.w3-animate-top Play with Cozmo
+    hr.w3-border-grey(style='margin:auto;width:40%')
+    div(style='display: flex;')
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+          | Actions
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+          a.dropdown-item(href='#')
+            h6#SAY.par SAY
+          a.dropdown-item(href='#')
+            h6#MATH.par MATH
+          a.dropdown-item(href='#')
+            h6#YES.nopar YES
+          a.dropdown-item(href='#')
+            h6#SOUND.nopar SOUND
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+          | Drive
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+          a.dropdown-item(href='#')
+            h6#DRIVEOFF.nopar DRIVEOFF
+          a.dropdown-item(href='#')
+            h6#MOVE.par MOVE
+          a.dropdown-item(href='#')
+            h6#TURN.par TURN
+          a.dropdown-item(href='#')
+            h6#DRIVEOFF.par LIFT
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+          | Animations
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+          a.dropdown-item(href='#')
+           h6#PARTY.nopar PARTY
+          a.dropdown-item(href='#')
+           h6#LIGHT.par LIGHT
+          a.dropdown-item(href='#')
+            h6#WIN.nopar WIN
+          a.dropdown-item(href='#')
+            h6#HICCUP.nopar HICCUP
+          a.dropdown-item(href='#')
+            h6#SURPRISE.nopar SURPRISE
+          a.dropdown-item(href='#')
+            h6#EXCITED.nopar EXCITED
+          a.dropdown-item(href='#')
+            h6#SNEEZE.nopar SNEEZE
+          a.dropdown-item(href='#')
+            h6#SCARED.nopar SCARED
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            | CubesAnimations
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+          a.dropdown-item(href='#')
+            h6#CUBERED.nopar CUBERED
+          a.dropdown-item(href='#')
+            h6#CUBEBLUE.par CUBEBLUE
+          a.dropdown-item(href='#')
+            h6#CUBEGREEN.nopar CUBEGREEN
+          a.dropdown-item(href='#')
+            h6#PICKUP.nopar PICKUP
+          a.dropdown-item(href='#')
+            h6#DROP.nopar DROP
+          a.dropdown-item(href='#')
+            h6#ROLLCUBE.nopar ROLLCUBE
+          a.dropdown-item(href='#')
+            h6#WHEELIE.nopar WHEELIE
+      .dropdown
+        button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            | Animals
+        .dropdown-menu(aria-labelledby='dropdownMenuButton')
+          a.dropdown-item(href='#')
+            h6#DUCK.nopar DUCK
+          a.dropdown-item(href='#')
+            h6#ELEPHANT.par ELEPHANT
+          a.dropdown-item(href='#')
+            h6#SHEEP.nopar SHEEP
+      div
+        a.btn.btn-secondary(href='/' style='background-color: #a64dff !important;' aria-haspopup='true' aria-expanded='false')
+            | Home
+      div
+        a.btn.btn-secondary(href='localhost:5000/' style='background-color: #669999 !important;' aria-haspopup='true' aria-expanded='false')
+            | Code
+
+    .jumbotron(style='color: black;')
+      h3.display-6
+        | Your current command
+        p.lead
+          | Here you will find the current set up you will be passing to de queue to execute, select a command from the dropdown option and type the params:
+        div(style='display: flex;')
+          .input-group.input-group-lg
+            .input-group-prepend
+              span#inputGroup-sizing-lg.input-group-text SAY
+            input#inputcode.form-control(type='text' aria-label='Large' aria-describedby='inputGroup-sizing-sm')
+          a#save.btn.btn-success.btn-lg(href='#' role='button') Save
+        hr.my-4
+        p Commands going to Cozmo:
+        h6 (click on the command you'd like to remove)
+        ul.list-group
+            each line, index in code
+                li(id=index).li1.list-group-item #{line} 
+        p.lead
+          a.clear.btn.btn-primary.btn-lg(href='#' role='button') Clear
+          a.execute.btn.btn-success.btn-lg(href='#' role='button') Execute
+  .w3-display-bottomleft.w3-padding-large
+    | Powered by 
+    a(href='#' target='') UFM
+script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous')
+script(src='js/cozmo.js')
