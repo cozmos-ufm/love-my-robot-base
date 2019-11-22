@@ -1,32 +1,49 @@
-# Love My Robot
-Este repositorio contiene todo lo necesario para que usted inicie el desarrollo del proyecto.
+<a href="https://github.com/cozmos-ufm/love-my-robot-base">
+    <img src="https://image.flaticon.com/icons/svg/647/647860.svg" alt="Robot" title="Robot"  height="200"  align="center" />
+</a>
 
-Note como cada proyecto vive asiladamente dentro de su propio folder.
+:star: Star us on GitHub — it helps!
 
+![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
+![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Use este README para llenarlo con su informacion:
+# The smartest, cutest AI-powered robot you’ve ever seen
 
-- Usage
-- Alguna explicacion extra.
+Love my robot 
 
+# Usage
 
-# Compilar / Build
+First, you have to clone the repo
 
-docker-compose build --parallel
+```shell
+git clone https://github.com/cozmos-ufm/love-my-robot-base.git
+```
 
+Then, install the requirements
+
+```shell
+pip install -r requirements.txt
+```
 
 # Correr y compilar antes
 
+```shell
 docker-compose up --build
-
-
+```
 
 # Correr
 
-docker-compose up
+```shell
+docker-compose up 
 
+python lex/lex.py
+
+```
+
+# Deternerlo
+
+```shell
 docker-compose down -v
-
-# Probar solo un app y compilar antes
-
-docker-compose up --build lex
+```
