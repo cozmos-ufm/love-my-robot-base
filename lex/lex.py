@@ -85,7 +85,10 @@ def moveback(negativedistance_speed):
     return f"    robot.drive_straight(distance_mm({param1}), speed_mmps({param2})).wait_for_completed()"
 
 def turn(degrees):
-    int(degrees)
+    if " " in degrees or degrees == "":
+        degrees = 90
+    else:
+        int(degrees)
     # Turn 90 degrees to the left.
     # Note: To turn to the right, just use a negative number.
     return f"    robot.turn_in_place(degrees({degrees})).wait_for_completed()"
@@ -109,7 +112,10 @@ def PartyMode(unused_param):
     return var_string
 
 def Lights(light_color):
-    light_color = light_color.lower()
+    if " " in light_color or light_color == "":
+        light_color = "blue"
+    else:
+        light_color = light_color.lower()
     return f"    robot.set_all_backpack_lights(cozmo.lights.{light_color}_light)\n    time.sleep(1)"
 
 def win(unused_param):
